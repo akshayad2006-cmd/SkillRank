@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #020617, #0F172A, #1E293B);
+  color: #E5E7EB;
+  padding: 20px;
+}
+
+/* ===== TOP BAR ===== */
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timer {
+  font-weight: bold;
+  color: #22D3EE;
+}
+
+/* PROGRESS */
+
+.progress {
+  margin-top: 10px;
+  height: 10px;
+  background: #334155;
+  border-radius: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#22D3EE,#8B5CF6);
+  border-radius: 10px;
+}
+
+/* QUESTION BOX */
+
+.question-box {
+  margin-top: 20px;
+  background: #1E293B;
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+}
+
+/* OPTIONS */
+
+.option {
+  background: #1E293B;
+  border: 1px solid #334155;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.option:hover {
+  border: 1px solid #22D3EE;
+}
+
+.selected {
+  border: 1px solid #8B5CF6;
+  background: #1E1B4B;
+}
+
+/* BUTTONS */
+
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  background: #8B5CF6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-right: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #7C3AED;
+}
