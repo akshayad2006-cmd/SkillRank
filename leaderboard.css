@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background:
+  radial-gradient(circle at 20% 30%, #1b263b,transparent),
+  radial-gradient(circle at 80% 70%,#0d1b2a,transparent),
+  #020617;
+  color: #E5E7EB;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: #14192f;
+  border-bottom: 1px solid #334155;
+}
+
+.logo {
+  font-size:20px;
+  background: linear-gradient(90deg,#22D3EE,#8B5CF6);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+font-size:16px;
+position:relative;
+}
+.nav-links a::after{
+content:"";
+position:absolute;
+width:0%;
+height:2px;
+left:0;
+bottom:-5px;
+background:#4cc9f0;
+transition:0.3s;
+}
+.nav-links a:hover::after{
+width:100%;
+}
+/* TITLE */
+.title {
+  text-align: center;
+  margin-top: 20px;
+}
+/* TABS */
+.tabs {
+  text-align: center;
+  margin: 20px;
+}
+.tab {
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.tab.active {
+  color: #8B5CF6;
+  border-bottom: 2px solid #8B5CF6;
+}
+/* FILTERS */
+.filters {
+  text-align: center;
+}
+input, select {
+  margin: 10px;
+  padding: 10px;
+  background: #1E293B;
+  border: 1px solid #334155;
+  color: white;
+  border-radius: 8px;
+}
+/* TOP 3 */
+.top3 {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.card {
+  background: #1E293B;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 15px;
+  text-align: center;
+  width: 120px;
+}
+.first { box-shadow: 0 0 10px #FACC15; }
+.second { box-shadow: 0 0 10px #9CA3AF; }
+.third { box-shadow: 0 0 10px #c64d1d; }
+/* TABLE */
+table {
+  width: 80%;
+  margin: auto;
+  border-collapse: collapse;
+  background: #1E293B;
+}
+th {
+  background: #0F172A;
+  color: #22D3EE;
+  padding: 12px;
+}
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #334155;
+}
+tr:hover {
+  background: #334155;
+}
+/* FOOTER */
+.footer {
+ border-top: 1px solid #334155;
+  margin-top: 40px;
+  padding-top: 20px;
+  background: #14192f;
+  text-align: center;
+  margin: 30px;
+  color: #9CA3AF;
+}

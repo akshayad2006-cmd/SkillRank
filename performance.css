@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #020617, #0F172A, #1E293B);
+  color: #E5E7EB;
+  padding: 30px;
+}
+
+/* HEADER */
+
+h1 {
+
+  background: linear-gradient(90deg,#22D3EE,#8B5CF6);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* CARDS */
+
+.summary {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  flex: 1;
+  background: #1E293B;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+}
+
+/* CHARTS */
+
+.chart-box {
+  background: #1E293B;
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 20px;
+}
+
+/* TEXT */
+
+p {
+  color: #9CA3AF;
+}

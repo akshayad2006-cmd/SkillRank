@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Leaderboard</title>
+<link rel="stylesheet" href="leaderboard.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">SkillRank</div>
+  <div class="nav-links">
+    <a href="#">Dashboard</a>
+    <a href="#">Leaderboard</a>
+    <a href="#">Profile</a>
+  </div>
+</div>
+
+<!-- TITLE -->
+<h1 class="title">Leaderboard</h1>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active">Daily</button>
+  <button class="tab">Weekly</button>
+  <button class="tab">Overall</button>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <input type="text" id="search" placeholder="Search Username...">
+
+  <select id="category">
+    <option value="all">All Categories</option>
+    <option value="Programming">Programming</option>
+    <option value="Aptitude">Aptitude</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="General">General Knowledge</option>
+  </select>
+</div>
+
+<!-- TOP 3 -->
+<div class="top3">
+  <div class="card second">
+    <p>Sam</p>
+    <span>950</span>
+  </div>
+
+  <div class="card first">
+    <p>Alex</p>
+    <span>980</span>
+  </div>
+
+  <div class="card third">
+    <p>Mia</p>
+    <span>920</span>
+  </div>
+</div>
+
+<!-- TABLE -->
+<table id="leaderboardTable">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Score</th>
+      <th>Quizzes</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class="rank-1">1</td>
+      <td>Alex</td>
+      <td>980</td>
+      <td>25</td>
+      <td>Programming</td>
+    </tr>
+    <tr>
+      <td class="rank-2">2</td>
+      <td>Sam</td>
+      <td>950</td>
+      <td>22</td>
+      <td>Aptitude</td>
+    </tr>
+    <tr>
+      <td class="rank-3">3</td>
+      <td>Mia</td>
+      <td>920</td>
+      <td>20</td>
+      <td>Mathematics</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>John</td>
+      <td>890</td>
+      <td>18</td>
+      <td>Programming</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Priya</td>
+      <td>870</td>
+      <td>17</td>
+      <td>Aptitude</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- FOOTER -->
+<div class="footer">
+  © 2026 SkillRank
+</div>
+
+<script src="leaderboard.js"></script>
+
+</body>
+</html>
