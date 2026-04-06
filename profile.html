@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <link rel="stylesheet" href="profile.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>User Profile</h1>
+
+  <div class="profile-card">
+
+    <!-- PROFILE IMAGE -->
+    <img src="https://via.placeholder.com/100" class="profile-img">
+
+    <!-- USER INFO -->
+    <h2 id="name">Loading...</h2>
+
+    <div class="info">
+      <p>Email: <span id="email">Loading...</span></p>
+      <p>Joined: Jan 2026</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat-box">
+        <h3 id="totalQuizzes">0</h3>
+        <p>Total Quizzes</p>
+      </div>
+
+      <div class="stat-box">
+        <h3 id="highestScore">0%</h3>
+        <p>Highest Score</p>
+      </div>
+
+      <div class="stat-box">
+        <h3 id="avgScore">0%</h3>
+        <p>Average Score</p>
+      </div>
+
+      <div class="stat-box">
+        <h3 id="rank">--</h3>
+        <p>Rank</p>
+      </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+      <button onclick="window.location.href='dashboard.html'">Back</button>
+      <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+async function loadProfile() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    // USER DATA
+    const res = await fetch("http://localhost:5000/api/profile", {
+      headers: {
+        "Authorization": token
+      }
+    });
+
+    const data = await res.json();
+
+    document.getElementById("name").innerText = data.username;
+    document.getElementById("email").innerText = data.email;
+
+    // STATS
+    const statsRes = await fetch("http://localhost:5000/api/score/stats", {
+      headers: {
+        "Authorization": token
+      }
+    });
+
+    const stats = await statsRes.json();
+
+    document.getElementById("totalQuizzes").innerText = stats.totalQuizzes;
+    document.getElementById("highestScore").innerText = stats.highest + "%";
+    document.getElementById("avgScore").innerText = stats.average + "%";
+
+    // TEMP rank (will improve later)
+    document.getElementById("rank").innerText = "--";
+
+  } catch (err) {
+    console.log("Error:", err);
+  }
+}
+
+window.onload = loadProfile;
+
+</script>
+
+</body>
+</html>

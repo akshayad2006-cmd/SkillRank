@@ -10,10 +10,9 @@
 
   <div class="menu">
     <a href="#" class="active">Dashboard</a>
-    <a href="#">Take Quiz</a>
-    <a href="#">Leaderboard</a>
-    <a href="#">Profile</a>
-    <a href="#">Performance</a>
+    <a href="quizcate.html">Take Quiz</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="profile.html">Profile</a>
     <a href="login.html">Logout</a>
   </div>
 </div>
@@ -23,33 +22,36 @@
 
   <!-- HEADER -->
   <div class="header">
-    <h1>Welcome back, Akshaya </h1>
+    <h1 id="username"></h1>
+    <h2 id="message"></h2>
     <p>Track your progress and keep competing!</p>
   </div>
 
   <!-- STATS -->
   <div class="stats">
-    <div class="card">
-      <h3>Total Quizzes</h3>
-      <p>25</p>
-    </div>
-
-    <div class="card">
-      <h3>Highest Score</h3>
-      <p>95%</p>
-    </div>
-
-    <div class="card">
-      <h3>Average Score</h3>
-      <p>82%</p>
-    </div>
+  <div class="card">
+    <h3>Total Quizzes</h3>
+    <p id="totalQuizzes">0</p>
   </div>
+
+  <div class="card">
+    <h3>Highest Score</h3>
+    <p id="highestScore">0%</p>
+  </div>
+
+  <div class="card">
+    <h3>Average Score</h3>
+    <p id="avgScore">0%</p>
+  </div>
+</div>
 
   <!-- CTA -->
   <div class="cta">
     <h2>Ready for a new challenge?</h2>
     <p>Start a new quiz and improve your rank!</p>
-    <button>Start New Quiz</button>
+    <button onclick="window.location.href='quizcate.html'">
+      Start New Quiz
+    </button>
   </div>
 
   <!-- ACTIVITY -->
@@ -61,6 +63,66 @@
   </div>
 
 </div>
+<script>
 
+async function loadDashboard() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/dashboard", {
+      method: "GET",
+      headers: {
+        "Authorization": token
+      }
+    });
+
+    const data = await res.json();
+
+    document.getElementById("message").innerText =
+      data.message + " (" + data.email + ")";
+
+    document.getElementById("username").innerText =
+      "Welcome back, " + data.username;
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
+async function loadStats() {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch("http://localhost:5000/api/score/stats", {
+      headers: {
+        "Authorization": token
+      }
+    });
+
+    const data = await res.json();
+
+    document.getElementById("totalQuizzes").innerText = data.totalQuizzes;
+    document.getElementById("highestScore").innerText = data.highest + "%";
+    document.getElementById("avgScore").innerText = data.average + "%";
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// RUN BOTH FUNCTIONS
+window.onload = function () {
+  loadDashboard();
+  loadStats();
+};
+
+</script>
 </body>
 </html>

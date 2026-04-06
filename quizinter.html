@@ -1,93 +1,102 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Quiz Interface</title>
-        <link rel="stylesheet" href="quizinter.css">
-    </head>
-    <body>
-        <div class="top-bar">
-            <h3 id="qNumber">Question 1 / 5</h3>
-            <div class="timer" id="timer">60</div>
-        </div>
+<head>
+  <title>Quiz</title>
+  <link rel="stylesheet" href="quizinter.css">
+</head>
 
-        <div class="progress">
-            <div class="progress-fill" id="progress"></div>
-        </div>
+<body>
 
-        <div class="question-box">
-            <h2 id="question">Question text</h2>
-            <div id="options"></div>
-        </div>
+<div class="top-bar">
+  <h3 id="qNumber"></h3>
+  <div class="timer" id="timer">60</div>
+</div>
 
-        <div class="buttons">
-            <button onclick="prevQuestion()">Previous</button>
-            <button onclick="nextQuestion()">Next</button>
-            <button onclick="submitQuiz()">Submit</button>
-        </div>
+<div class="progress">
+  <div class="progress-fill" id="progress"></div>
+</div>
+
+<div class="question-box">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+</div>
+
+<div class="buttons">
+  <button onclick="prevQuestion()">Previous</button>
+  <button onclick="nextQuestion()">Next</button>
+  <button onclick="submitQuiz()">Submit</button>
+</div>
 
 <script>
 
-/* ===== QUESTIONS DATA ===== */
+// ================= QUIZ DATA =================
 
-const questions = [
-  {
-    q: "What does HTML stand for?",
-    options: ["Hyper Text Markup Language", "High Transfer Machine Language", "Hyper Tool Multi Language", "None"],
-    answer: 0
-  },
-  {
-    q: "CSS is used for?",
-    options: ["Structure", "Styling", "Database", "Logic"],
-    answer: 1
-  },
-  {
-    q: "JavaScript is?",
-    options: ["Programming Language", "Database", "OS", "Browser"],
-    answer: 0
-  },
-  {
-    q: "2 + 2 = ?",
-    options: ["3", "4", "5", "6"],
-    answer: 1
-  },
-  {
-    q: "Capital of India?",
-    options: ["Chennai", "Mumbai", "Delhi", "Kolkata"],
-    answer: 2
-  }
-];
+const allQuizzes = {
 
-/* RANDOMIZE QUESTIONS */
-questions.sort(() => Math.random() - 0.5);
+  programming: [
+    { q: "What is HTML?", options: ["Language", "OS", "Browser", "None"], answer: 0 },
+    { q: "JS stands for?", options: ["JavaScript", "Java", "Json", "None"], answer: 0 }
+  ],
 
+  aptitude: [
+    { q: "2+2?", options: ["3","4","5","6"], answer: 1 },
+    { q: "5*3?", options: ["10","15","20","25"], answer: 1 }
+  ],
+
+  math: [
+    { q: "Square root of 16?", options: ["2","4","8","16"], answer: 1 },
+    { q: "10/2?", options: ["2","5","10","20"], answer: 1 }
+  ],
+
+  gk: [
+    { q: "Capital of India?", options: ["Delhi","Mumbai","Chennai","Kolkata"], answer: 0 },
+    { q: "Largest ocean?", options: ["Atlantic","Indian","Pacific","Arctic"], answer: 2 }
+  ]
+
+};
+
+// ================= SETUP =================
+
+let category = localStorage.getItem("category");
+
+if (!category) {
+  alert("No category selected");
+  window.location.href = "quizcate.html";
+}
+
+let questions = allQuizzes[category];
 let current = 0;
 let answers = new Array(questions.length).fill(null);
 
-/* LOAD QUESTION */
+// ================= LOAD QUESTION =================
 
 function loadQuestion() {
   let q = questions[current];
-  document.getElementById("question").innerText = q.q;
-  document.getElementById("qNumber").innerText = `Question ${current+1} / ${questions.length}`;
 
-  let optionsHTML = "";
+  document.getElementById("question").innerText = q.q;
+  document.getElementById("qNumber").innerText =
+    `Question ${current + 1} / ${questions.length}`;
+
+  let html = "";
+
   q.options.forEach((opt, i) => {
     let selected = answers[current] === i ? "selected" : "";
-    optionsHTML += `<div class="option ${selected}" onclick="selectOption(${i})">${opt}</div>`;
+    html += `<div class="option ${selected}" onclick="selectOption(${i})">${opt}</div>`;
   });
 
-  document.getElementById("options").innerHTML = optionsHTML;
+  document.getElementById("options").innerHTML = html;
 
   updateProgress();
 }
 
-/* SELECT OPTION */
+// ================= SELECT =================
 
 function selectOption(i) {
   answers[current] = i;
   loadQuestion();
 }
 
-/* NAVIGATION */
+// ================= NAVIGATION =================
 
 function nextQuestion() {
   if (current < questions.length - 1) {
@@ -103,14 +112,14 @@ function prevQuestion() {
   }
 }
 
-/* PROGRESS BAR */
+// ================= PROGRESS =================
 
 function updateProgress() {
-  let progress = ((current+1) / questions.length) * 100;
+  let progress = ((current + 1) / questions.length) * 100;
   document.getElementById("progress").style.width = progress + "%";
 }
 
-/* TIMER */
+// ================= TIMER =================
 
 let time = 60;
 
@@ -118,37 +127,57 @@ let timer = setInterval(() => {
   time--;
   document.getElementById("timer").innerText = time;
 
-  if (time <= 20) {
-    document.getElementById("timer").style.color = "#FACC15";
-  }
-
-  if (time <= 10) {
-    document.getElementById("timer").style.color = "#EF4444";
-  }
-
-  if (time === 0) {
+  if (time <= 0) {
     clearInterval(timer);
     submitQuiz();
   }
-
 }, 1000);
 
-/* SUBMIT */
+// ================= SUBMIT =================
 
-function submitQuiz() {
+async function submitQuiz() {
+  clearInterval(timer);
+
   let score = 0;
 
   questions.forEach((q, i) => {
     if (answers[i] === q.answer) score++;
   });
 
-  alert("Your Score: " + score + "/" + questions.length);
+  alert(`Score: ${score}/${questions.length}`);
+
+  const token = localStorage.getItem("token");
+
+  try {
+    await fetch("http://localhost:5000/api/score/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({
+        category: category,
+        score: score,
+        total: questions.length
+      })
+    });
+  } catch (err) {
+    console.log("Error saving score:", err);
+  }
+
+  // STORE RESULT
+  localStorage.setItem("score", score);
+  localStorage.setItem("total", questions.length);
+
+  // REDIRECT
+  window.location.href = "result.html";
 }
 
-/* INIT */
+// ================= INIT =================
 
 loadQuestion();
 
 </script>
-    </body>
+
+</body>
 </html>
