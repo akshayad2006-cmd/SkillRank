@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Score = require("../models/Score");
 const jwt = require("jsonwebtoken");
-
+const authMiddleware = require("../middleware/authMiddleware");
 // SAVE SCORE WITH REAL USER
-router.post("/save", async (req, res) => {
+router.post("/save", authMiddleware, async (req, res) => {
   const token = req.headers["authorization"];
 
   try {
@@ -30,7 +30,7 @@ router.post("/save", async (req, res) => {
 });
 
 // GET USER STATS
-router.get("/stats", async (req, res) => {
+router.get("/stats", authMiddleware,async (req, res) => {
   const token = req.headers["authorization"];
 
   try {
@@ -59,6 +59,17 @@ router.get("/stats", async (req, res) => {
 
   } catch {
     res.status(401).json({ message: "Invalid token" });
+  }
+});
+router.get("/recent", authMiddleware,async (req, res) => {
+  try {
+    const data = await Score.find({ userId: req.user.id })
+      .sort({ createdAt: -1 })
+      .limit(3);
+
+    res.json(data);
+  } catch {
+    res.status(500).json({ message: "Error" });
   }
 });
 

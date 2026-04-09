@@ -1,4 +1,4 @@
-/* GLOBAL */
+
 body {
   margin: 0;
   font-family:'Poppins',sans-serif;
@@ -8,7 +8,7 @@ body {
   #020617;
   color: #E5E7EB;
 }
-/* NAVBAR */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -16,14 +16,19 @@ body {
   background: #14192f;
   border-bottom: 1px solid #334155;
 }
-.logo { 
-  font-size: 20px;
-  margin-bottom: 10px;
+.nav-links{
+  display: flex;
+  gap: 15px;
+}
+.logo {
+  font-size:20px;
   background: linear-gradient(90deg,#22D3EE,#8B5CF6);
+  font-weight: 500;
   -webkit-background-clip: text;
   color: transparent;
 }
 .nav-links a{
+
 text-decoration:none;
 color:white;
 font-size:16px;
@@ -69,7 +74,6 @@ width:100%;
   color: #FACC15;
   margin-top: 10px;
 }
-/* STATS */
 .stats {
   display: flex;
   justify-content: center;
@@ -95,17 +99,21 @@ width:100%;
 }
 .buttons {
   margin-top: 30px;
+  border-radius: 20px;
 }
 .btn {
   padding: 10px 20px;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 30px;
   border: none;
   cursor: pointer;
 }
 .primary {
   background: #8B5CF6;
   color: white;
+  border-radius: 30px;
+  font-size: large;
+  border-color: #8B5CF6;
 }
 .primary:hover {
   background: #7C3AED;
@@ -115,6 +123,9 @@ width:100%;
   background: transparent;
   border: 1px solid #22D3EE;
   color: #22D3EE;
+  border-radius: 30px;
+  font-size: large;
+  border-color: #22D3EE;
 }
 .secondary:hover {
   background: #22D3EE;
@@ -123,6 +134,9 @@ width:100%;
 .leaderboard {
   background: #22D3EE;
   color: #020617;
+  border-radius: 30px;
+  font-size: large;
+  background-color: #22D3EE;
 }
 /* FOOTER */
 .footer {

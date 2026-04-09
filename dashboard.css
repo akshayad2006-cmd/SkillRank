@@ -1,4 +1,4 @@
-/* ===== GLOBAL ===== */
+
 
 body {
   margin: 0;
@@ -11,7 +11,7 @@ body {
   display: flex;
 }
 
-/* ===== SIDEBAR ===== */
+
 
 .sidebar {
   width: 220px;
@@ -21,10 +21,10 @@ body {
 }
 
 .logo {
-  font-family: 'Orbitron', sans-serif;
   font-size: 20px;
   margin-bottom: 30px;
-  background: linear-gradient(90deg,#22D3EE,#8B5CF6);
+  background:#22D3EE;
+  font-weight: 500;
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -48,14 +48,12 @@ body {
   border-left: 4px solid #8B5CF6;
 }
 
-/* ===== MAIN CONTENT ===== */
 
 .main {
   flex: 1;
   padding: 30px;
 }
 
-/* HEADER */
 
 .header h1 {
   margin: 0;
@@ -66,7 +64,6 @@ body {
   color: #9CA3AF;
 }
 
-/* ===== STATS ===== */
 
 .stats {
   display: flex;
@@ -98,7 +95,7 @@ body {
   font-size: 20px;
 }
 
-/* ===== CTA ===== */
+
 
 .cta {
   margin-top: 30px;
@@ -125,7 +122,6 @@ body {
   box-shadow: 0 0 12px #8B5CF6;
 }
 
-/* ===== RECENT ACTIVITY ===== */
 
 .activity {
   margin-top: 30px;

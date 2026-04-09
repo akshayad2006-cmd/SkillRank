@@ -8,15 +8,12 @@ body {
   color: #E5E7EB;
 }
 
-/* HEADER */
-
 .header {
   text-align: center;
   padding: 30px;
 }
 
 .header h1 {
-  font-family: 'Orbitron';
   font-size: 28px;
   background: linear-gradient(90deg,#22D3EE,#8B5CF6);
   -webkit-background-clip: text;
@@ -27,7 +24,6 @@ body {
   color: #9CA3AF;
 }
 
-/* GRID */
 
 .r1{
   display: flex;
@@ -39,7 +35,6 @@ body {
   margin-top: 40px;
 }
 
-/* CARD */
 
 .card {
   height: 200px;
@@ -67,13 +62,11 @@ body {
   color: #9CA3AF;
 }
 
-/* DIFFICULTY */
 
 .easy { color: #22C55E; }
 .medium { color: #FACC15; }
 .hard { color: #EF4444; }
 
-/* BUTTON */
 
 button {
   background: #8B5CF6;

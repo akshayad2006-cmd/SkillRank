@@ -16,10 +16,16 @@ body {
   background: #14192f;
   border-bottom: 1px solid #334155;
 }
+.nav-links{
+  display: flex;
+  gap: 15px;
+}
+
 
 .logo {
   font-size:20px;
   background: linear-gradient(90deg,#22D3EE,#8B5CF6);
+  font-weight: 500;
   -webkit-background-clip: text;
   color: transparent;
 }

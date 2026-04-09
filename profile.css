@@ -36,12 +36,6 @@ h1 {
   text-align: center;
 }
 
-.profile-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid #8B5CF6;
-}
 
 /* INFO */
 
@@ -64,6 +58,11 @@ h1 {
   padding: 15px;
   border-radius: 12px;
   border: 1px solid #334155;
+}
+.stat-box:last-child {
+  grid-column: span 2;    
+  justify-self: center;    
+  width: 50%;              
 }
 
 /* BUTTONS */

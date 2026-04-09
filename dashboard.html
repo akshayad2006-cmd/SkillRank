@@ -1,10 +1,12 @@
+<!DOCTYPE html>
 <html>
-    <head> 
-        <title>Dashboard</title>
-    </head>
-    <link rel="stylesheet" href="dashboard.css">
-    <body>
-        <!-- SIDEBAR -->
+<head> 
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
 <div class="sidebar">
   <div class="logo">SkillRank</div>
 
@@ -13,39 +15,34 @@
     <a href="quizcate.html">Take Quiz</a>
     <a href="leaderboard.html">Leaderboard</a>
     <a href="profile.html">Profile</a>
-    <a href="login.html">Logout</a>
+    <a href="#" onclick="logout()">Logout</a>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
 <div class="main">
 
-  <!-- HEADER -->
   <div class="header">
-    <h1 id="username"></h1>
-    <h2 id="message"></h2>
+    <h1 id="username">Loading...</h1>
     <p>Track your progress and keep competing!</p>
   </div>
 
-  <!-- STATS -->
   <div class="stats">
-  <div class="card">
-    <h3>Total Quizzes</h3>
-    <p id="totalQuizzes">0</p>
+    <div class="card">
+      <h3>Total Quizzes</h3>
+      <p id="totalQuizzes">0</p>
+    </div>
+
+    <div class="card">
+      <h3>Highest Score</h3>
+      <p id="highestScore">0%</p>
+    </div>
+
+    <div class="card">
+      <h3>Average Score</h3>
+      <p id="avgScore">0%</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Highest Score</h3>
-    <p id="highestScore">0%</p>
-  </div>
-
-  <div class="card">
-    <h3>Average Score</h3>
-    <p id="avgScore">0%</p>
-  </div>
-</div>
-
-  <!-- CTA -->
   <div class="cta">
     <h2>Ready for a new challenge?</h2>
     <p>Start a new quiz and improve your rank!</p>
@@ -54,16 +51,21 @@
     </button>
   </div>
 
-  <!-- ACTIVITY -->
   <div class="activity">
     <h3>Recent Activity</h3>
-    <p>✔ Completed HTML Quiz – Score: 85%</p>
-    <p>✔ Attempted JS Quiz – Score: 72%</p>
-    <p>✔ Ranked #12 in Weekly Leaderboard</p>
+    <div id="activityList">
+      <p>No recent activity</p>
+    </div>
   </div>
 
 </div>
+
 <script>
+
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
 
 async function loadDashboard() {
   const token = localStorage.getItem("token");
@@ -76,53 +78,80 @@ async function loadDashboard() {
 
   try {
     const res = await fetch("http://localhost:5000/api/auth/dashboard", {
-      method: "GET",
-      headers: {
-        "Authorization": token
-      }
+      headers: { "Authorization": token }
     });
 
     const data = await res.json();
 
-    document.getElementById("message").innerText =
-      data.message + " (" + data.email + ")";
-
     document.getElementById("username").innerText =
       "Welcome back, " + data.username;
+
+    
 
   } catch (err) {
     console.log(err);
   }
 }
-
 
 async function loadStats() {
   const token = localStorage.getItem("token");
 
   try {
     const res = await fetch("http://localhost:5000/api/score/stats", {
-      headers: {
-        "Authorization": token
-      }
+      headers: { "Authorization": token }
     });
 
     const data = await res.json();
 
-    document.getElementById("totalQuizzes").innerText = data.totalQuizzes;
-    document.getElementById("highestScore").innerText = data.highest + "%";
-    document.getElementById("avgScore").innerText = data.average + "%";
+    document.getElementById("totalQuizzes").innerText = data.totalQuizzes || 0;
+    document.getElementById("highestScore").innerText = (data.highest || 0) + "%";
+    document.getElementById("avgScore").innerText = (data.average || 0) + "%";
 
   } catch (err) {
     console.log(err);
   }
 }
 
-// RUN BOTH FUNCTIONS
-window.onload = function () {
-  loadDashboard();
-  loadStats();
+async function loadRecentActivity() {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch("http://localhost:5000/api/score/recent", {
+      headers: { "Authorization": token }
+    });
+
+    const data = await res.json();
+
+    let html = "";
+
+    if (!data || data.length === 0) {
+      html = "<p>No recent activity yet</p>";
+    } else {
+      data.forEach(item => {
+        html += `
+          <p>✔ ${capitalize(item.category)} Quiz - Score: ${item.score}/${item.total}</p>
+        `;
+      });
+    }
+
+    document.getElementById("activityList").innerHTML = html;
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+window.onload = async function () {
+  await loadDashboard();
+  await loadStats();
+  await loadRecentActivity();
 };
 
 </script>
+
 </body>
 </html>

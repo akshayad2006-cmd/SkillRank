@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Leaderboard</title>
+
 <link rel="stylesheet" href="leaderboard.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
@@ -10,7 +11,6 @@
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
   <div class="logo">SkillRank</div>
   <div class="nav-links">
@@ -20,46 +20,29 @@
   </div>
 </div>
 
-<!-- TITLE -->
+
 <h1 class="title">Leaderboard</h1>
 
-<!-- TABS -->
+
 <div class="tabs">
-  <button class="tab active">Daily</button>
-  <button class="tab">Weekly</button>
-  <button class="tab">Overall</button>
+  <button class="tab active">Overall</button>
 </div>
 
-<!-- FILTERS -->
+
 <div class="filters">
   <input type="text" id="search" placeholder="Search Username...">
 
   <select id="category">
     <option value="all">All Categories</option>
-    <option value="Programming">Programming</option>
-    <option value="Aptitude">Aptitude</option>
-    <option value="Mathematics">Mathematics</option>
-    <option value="General">General Knowledge</option>
+    <option value="programming">Programming</option>
+    <option value="aptitude">Aptitude</option>
+    <option value="math">Mathematics</option>
+    <option value="gk">General Knowledge</option>
   </select>
 </div>
 
 <!-- TOP 3 -->
-<div class="top3">
-  <div class="card second">
-    <p>Sam</p>
-    <span>950</span>
-  </div>
-
-  <div class="card first">
-    <p>Alex</p>
-    <span>980</span>
-  </div>
-
-  <div class="card third">
-    <p>Mia</p>
-    <span>920</span>
-  </div>
-</div>
+<div class="top3" id="top3"></div>
 
 <!-- TABLE -->
 <table id="leaderboardTable">
@@ -68,48 +51,11 @@
       <th>Rank</th>
       <th>Username</th>
       <th>Score</th>
-      <th>Quizzes</th>
       <th>Category</th>
     </tr>
   </thead>
 
-  <tbody>
-    <tr>
-      <td class="rank-1">1</td>
-      <td>Alex</td>
-      <td>980</td>
-      <td>25</td>
-      <td>Programming</td>
-    </tr>
-    <tr>
-      <td class="rank-2">2</td>
-      <td>Sam</td>
-      <td>950</td>
-      <td>22</td>
-      <td>Aptitude</td>
-    </tr>
-    <tr>
-      <td class="rank-3">3</td>
-      <td>Mia</td>
-      <td>920</td>
-      <td>20</td>
-      <td>Mathematics</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>John</td>
-      <td>890</td>
-      <td>18</td>
-      <td>Programming</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Priya</td>
-      <td>870</td>
-      <td>17</td>
-      <td>Aptitude</td>
-    </tr>
-  </tbody>
+  <tbody id="leaderboardBody"></tbody>
 </table>
 
 <!-- FOOTER -->
@@ -117,7 +63,97 @@
   © 2026 SkillRank
 </div>
 
-<script src="leaderboard.js"></script>
+<script>
+
+let allData = [];
+
+// LOAD DATA
+async function loadLeaderboard() {
+  const res = await fetch("http://localhost:5000/api/leaderboard");
+  allData = await res.json();
+
+  renderLeaderboard(allData);
+}
+
+// RENDER FUNCTION
+function renderLeaderboard(data) {
+
+  // ===== TOP 3 =====
+  let topHTML = "";
+
+  if (data[1]) {
+    topHTML += `
+      <div class="card second">
+        <h3>${data[1].username}</h3>
+        <span>${data[1].score}</span>
+      </div>`;
+  }
+
+  if (data[0]) {
+    topHTML += `
+      <div class="card first">
+        <h3>${data[0].username}</h3>
+        <span>${data[0].score}</span>
+      </div>`;
+  }
+
+  if (data[2]) {
+    topHTML += `
+      <div class="card third">
+        <h3>${data[2].username}</h3>
+        <span>${data[2].score}</span>
+      </div>`;
+  }
+
+  document.getElementById("top3").innerHTML = topHTML;
+
+  // ===== TABLE =====
+  let tableHTML = "";
+
+  data.forEach(user => {
+    tableHTML += `
+      <tr>
+        <td>${user.rank}</td>
+        <td>${user.username}</td>
+        <td>${user.score}</td>
+        <td>${user.category}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("leaderboardBody").innerHTML = tableHTML;
+}
+
+// SEARCH FILTER
+document.getElementById("search").addEventListener("input", () => {
+  const value = document.getElementById("search").value.toLowerCase();
+
+  const filtered = allData.filter(u =>
+    u.username.toLowerCase().includes(value)
+  );
+
+  renderLeaderboard(filtered);
+});
+
+// CATEGORY FILTER
+document.getElementById("category").addEventListener("change", () => {
+  const value = document.getElementById("category").value;
+
+  if (value === "all") {
+    renderLeaderboard(allData);
+    return;
+  }
+
+  const filtered = allData.filter(u =>
+    u.category.toLowerCase() === value
+  );
+
+  renderLeaderboard(filtered);
+});
+
+loadLeaderboard();
+
+</script>
 
 </body>
 </html>
