@@ -77,7 +77,7 @@ async function loadDashboard() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/auth/dashboard", {
+    const res = await fetch("https://skillrank-backend-5gtc.onrender.com/api/auth/dashboard", {
       headers: { "Authorization": token }
     });
 
@@ -97,7 +97,7 @@ async function loadStats() {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("http://localhost:5000/api/score/stats", {
+    const res = await fetch("https://skillrank-backend-5gtc.onrender.com/api/score/stats", {
       headers: { "Authorization": token }
     });
 
@@ -116,7 +116,7 @@ async function loadRecentActivity() {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("http://localhost:5000/api/score/recent", {
+    const res = await fetch("https://skillrank-backend-5gtc.onrender.com/api/score/recent", {
       headers: { "Authorization": token }
     });
 

@@ -68,7 +68,7 @@ async function loadProfile() {
 
   try {
     // USER DATA
-    const res = await fetch("http://localhost:5000/api/profile", {
+    const res = await fetch("https://skillrank-backend-5gtc.onrender.com/api/profile", {
       headers: {
         "Authorization": token
       }
@@ -80,7 +80,7 @@ async function loadProfile() {
     document.getElementById("email").innerText = data.email;
 
     // STATS
-    const statsRes = await fetch("http://localhost:5000/api/score/stats", {
+    const statsRes = await fetch("https://skillrank-backend-5gtc.onrender.com/api/score/stats", {
       headers: {
         "Authorization": token
       }

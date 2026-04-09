@@ -69,7 +69,7 @@ let allData = [];
 
 // LOAD DATA
 async function loadLeaderboard() {
-  const res = await fetch("http://localhost:5000/api/leaderboard");
+  const res = await fetch("https://skillrank-backend-5gtc.onrender.com/api/leaderboard");
   allData = await res.json();
 
   renderLeaderboard(allData);
